@@ -1,40 +1,81 @@
 # Zona - Find your market! 
-### This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
+Zona started at a hackathon when I was experimenting with the Mapbox API, I realized how powerful it could be for building visual, interactive tools around geography.
 
-First, run the development server:
+At the same time, I’m a spatial designer with UW Reality Labs, where I think a lot about how we interact with space, how our hands, eyes, and movement translate into understanding environments. That made me want something more immersive for exploring real-world geography, especially for things like urban planning or business decisions.
 
-```bash
+### That’s where Zona came from.
+
+It takes a really overwhelming question — “where do I even begin?” — and turns it into something visual and understandable. It solves a real problem, but it’s also flexible. You can use it out of curiosity, for a project, or to actually guide how you launch or market something. I see Zona as a space for high-agency builders, whether you’re just exploring ideas or trying to make something real, it's to ground your thinking in the real world instead of guessing.
+
+### Prerequisites
+- Node.js v18 or higher
+- npm (comes with Node)
+
+### Accounts & API keys (All free tiers work)
+- Mapbox — create account → get a public token → add localhost:3000 to allowed URLs
+- Anthropic — create account → add credits → generate API key
+- Supabase — create project → create a table:
+
+create table neighbourhood_profiles (
+  id bigint generated always as identity primary key,
+  name text unique not null,
+  profile jsonb not null
+);
+→ copy the project URL and anon key
+
+## Steps to use project
+### 1. Clone the repo
+git clone <repo-url>
+cd geo-zones
+
+### 2. Install dependencies
+npm install
+
+### 3. Create environment file
+cp .env.example .env.local
+#### Fill in your 4 keys:
+NEXT_PUBLIC_MAPBOX_TOKEN=
+ANTHROPIC_API_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+### 4. Run the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌍 Purpose
+I love the Waterloo community. It’s a place that constantly pushes out high-agency builders: students launching startups, YC-level thinkers, people who don’t just ideate but actually create. I see myself in that.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+But even with strong ideas, one thing is often missing: the right audience in the right place.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deciding where to pitch an idea for which audience is still driven by gut feeling, surface-level trends, or extensive research. Student founders and small business owners rarely have access to structured, data-backed insights about who actually lives in an area, what they need, and what’s missing.
 
-## Learn More
+Zona was built to change that --> making location intelligence accessible by turning messy geographic, demographic, and environmental data into clear, actionable insights for real-world decisions.
 
-To learn more about Next.js, take a look at the following resources:
+## 💡 Solution
+I built Zona because I kept running into the same problem — we have good ideas, but no real way of knowing where they actually make sense.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Zona takes messy location data — things like demographics, traffic, income signals, and business density — and turns it into something I can actually understand and use. Instead of just maps or raw stats, it breaks areas down into clear “zones” and explains what each one is like, who lives there, and what kind of businesses would fit.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The goal isn’t to be another analytics dashboard. I wanted something that helps me answer simple questions like:
+- Who lives here?
+- What’s the vibe of this area?
+- Is there unmet demand?
+- What businesses would actually succeed here?
 
-## Deploy on Vercel
+Future implementation: For retailers & sales representatives
+- where should I sell?
+- what should I sell here, what does my product mix look like?
+- how would I reach this audience?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+It does this by:
+- Aggregating location-based data (demographics, traffic, density, income signals)
+- Structuring areas into interpretable “zones”
+- Generating human-readable summaries + personas
+- Highlighting opportunity gaps and business fit
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# Zona
->>>>>>> b2f5d0761453f6231689e6d87bc9a83803429013
+It’s basically a way to go from random idea → grounded decision, without guessing.
+
+## Zona

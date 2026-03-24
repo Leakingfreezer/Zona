@@ -36,10 +36,10 @@ npm install
 ### 3. Create environment file
 cp .env.example .env.local
 #### Fill in your 4 keys:
-NEXT_PUBLIC_MAPBOX_TOKEN=
-ANTHROPIC_API_KEY=
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+- NEXT_PUBLIC_MAPBOX_TOKEN=
+- ANTHROPIC_API_KEY=
+- NEXT_PUBLIC_SUPABASE_URL=
+- NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
 ### 4. Run the dev server
 npm run dev

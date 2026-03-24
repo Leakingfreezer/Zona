@@ -28,7 +28,7 @@ export default function Home() {
   const [profile, setProfile] = useState<NeighbourhoodProfile | null>(null);
   const [profileLoading, setProfileLoading] = useState(false);
 
-  const handleZoneHover = useCallback(async (name: string | null) => {}, []);
+  const handleZoneHover = useCallback(async (_name: string | null) => {}, []);
 
   const handleZoneClick = useCallback(async (name: string) => {
     setActiveZone(name);
@@ -49,16 +49,16 @@ export default function Home() {
     <div className="flex h-full bg-gray-950">
       <aside className="w-80 shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col overflow-y-auto">
         <div className="p-6 border-b border-gray-800">
-          <h1 className="text-lg font-bold text-white tracking-tight">GeoZones</h1>
+          <h1 className="text-lg font-bold text-white tracking-tight">Zona</h1>
           <p className="text-gray-400 text-sm mt-1">Toronto market explorer</p>
         </div>
 
         <div className="p-6 flex flex-col gap-4 flex-1">
           {!activeZone && (
             <>
-              <p className="text-gray-500 text-xs uppercase tracking-widest">Phase 2 — Profiles</p>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">Explore</p>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Hover over any zone to see its demographic profile.
+                Click any zone to see its demographic profile.
               </p>
             </>
           )}
@@ -145,7 +145,7 @@ export default function Home() {
       </aside>
 
       <main className="flex-1 relative">
-        <TorontoMap onZoneHover={handleZoneHover} onZoneClick={handleZoneClick} />
+        <TorontoMap onZoneHover={handleZoneHover} onZoneClick={handleZoneClick} activeZone={activeZone} />
       </main>
     </div>
   );

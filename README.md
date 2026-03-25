@@ -1,5 +1,9 @@
 # Zona - Find your market! 
 
+## Work in Progress
+Figma branding/design process: https://www.figma.com/design/yVWkDdQK1MUVnUOiGRooaC/Zona-Branding-design?node-id=323-2&t=bYfhYwhqbB9qd3d2-1 
+System Architecture flow: https://www.figma.com/board/SOETxYH98piTRqjI4XzuMk/Zona-Architecture-System-Flow?node-id=0-1&t=bYfhYwhqbB9qd3d2-1
+
 ## Getting Started
 Zona started at a hackathon when I was experimenting with the Mapbox API, I realized how powerful it could be for building visual, interactive tools around geography.
 

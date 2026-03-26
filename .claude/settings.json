@@ -11,6 +11,9 @@
       "Bash(curl -s --max-time 15 -L \"https://services3.arcgis.com/b9WvedVPozvQffd7/arcgis/rest/services/Toronto_Neighbourhoods/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson\")",
       "Bash(curl -s --max-time 15 -L \"https://opendata.toronto.ca/city-planning/toronto-neighbourhoods/Neighbourhoods%20-%20historical%20140.geojson\")",
       "Bash(curl -s --max-time 10 \"https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/toronto.geojson\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Project\\geo-zones\\src\\app"
     ]
   }
 }

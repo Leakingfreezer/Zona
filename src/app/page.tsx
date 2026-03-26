@@ -1,152 +1,49 @@
-"use client";
+'use client'
 
-import dynamic from "next/dynamic";
-import { useState, useCallback } from "react";
+import { SpiralAnimation } from '@/components/ui/spiral-animation'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-const TorontoMap = dynamic(() => import("@/components/TorontoMap"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex-1 flex items-center justify-center bg-gray-950">
-      <p className="text-gray-500 text-sm">Initializing map...</p>
-    </div>
-  ),
-});
+export default function LandingPage() {
+  const [enterVisible, setEnterVisible] = useState(false)
+  const router = useRouter()
 
-interface NeighbourhoodProfile {
-  vibe: string;
-  summary: string;
-  demographics: string;
-  hotspots: string[];
-  traffic: string;
-  income_tier: string;
-  business_density: string;
-  best_for: string[];
-}
-
-export default function Home() {
-  const [activeZone, setActiveZone] = useState<string | null>(null);
-  const [profile, setProfile] = useState<NeighbourhoodProfile | null>(null);
-  const [profileLoading, setProfileLoading] = useState(false);
-
-  const handleZoneHover = useCallback(async (_name: string | null) => {}, []);
-
-  const handleZoneClick = useCallback(async (name: string) => {
-    setActiveZone(name);
-    setProfileLoading(true);
-    setProfile(null);
-    try {
-      const res = await fetch(`/api/profile/${encodeURIComponent(name)}`);
-      const data = await res.json();
-      setProfile(data);
-    } catch {
-      setProfile(null);
-    } finally {
-      setProfileLoading(false);
-    }
-  }, []);
+  // Fade in the Enter button after the animation has had time to establish
+  useEffect(() => {
+    const timer = setTimeout(() => setEnterVisible(true), 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
-    <div className="flex h-full bg-gray-950">
-      <aside className="w-80 shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col overflow-y-auto">
-        <div className="p-6 border-b border-gray-800">
-          <h1 className="text-lg font-bold text-white tracking-tight">Zona</h1>
-          <p className="text-gray-400 text-sm mt-1">Toronto market explorer</p>
-        </div>
+    <div className="fixed inset-0 w-full h-full overflow-hidden bg-black">
+      {/* Full-screen spiral animation */}
+      <div className="absolute inset-0">
+        <SpiralAnimation />
+      </div>
 
-        <div className="p-6 flex flex-col gap-4 flex-1">
-          {!activeZone && (
-            <>
-              <p className="text-gray-500 text-xs uppercase tracking-widest">Explore</p>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Click any zone to see its demographic profile.
-              </p>
-            </>
-          )}
+      {/* App name — top left */}
+      <div className="absolute top-8 left-10 z-10">
+        <span className="text-white text-sm tracking-[0.3em] uppercase font-extralight opacity-60">
+          Zona
+        </span>
+      </div>
 
-          {activeZone && (
-            <div className="flex flex-col gap-4">
-              <div>
-                <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Neighbourhood</p>
-                <h2 className="text-white font-bold text-base">{activeZone}</h2>
-                {profile && (
-                  <span className="text-blue-400 text-xs">{profile.vibe}</span>
-                )}
-              </div>
-
-              {profileLoading && (
-                <p className="text-gray-500 text-sm">Loading profile...</p>
-              )}
-
-              {profile && !profileLoading && (
-                <>
-                  <div>
-                    <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Overview</p>
-                    <p className="text-gray-300 text-sm leading-relaxed">{profile.summary}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Demographics</p>
-                    <p className="text-gray-300 text-sm">{profile.demographics}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Hotspots</p>
-                    <ul className="flex flex-col gap-1">
-                      {profile.hotspots.map((h) => (
-                        <li key={h} className="text-gray-300 text-sm flex items-start gap-2">
-                          <span className="text-blue-400 mt-0.5">›</span>{h}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { label: "Traffic", value: profile.traffic },
-                      { label: "Income", value: profile.income_tier },
-                      { label: "Businesses", value: profile.business_density },
-                    ].map(({ label, value }) => (
-                      <div key={label} className="bg-gray-800 rounded-lg p-2 text-center">
-                        <p className="text-gray-500 text-xs">{label}</p>
-                        <p className="text-white text-xs font-medium capitalize mt-0.5">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Best for</p>
-                    <div className="flex flex-wrap gap-1">
-                      {profile.best_for.map((b) => (
-                        <span key={b} className="bg-blue-900/40 text-blue-300 text-xs px-2 py-1 rounded-full">
-                          {b}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="p-6 border-t border-gray-800">
-          <p className="text-gray-600 text-xs">
-            Data:{" "}
-            <a
-              href="https://open.toronto.ca/dataset/neighbourhoods/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              Toronto Open Data
-            </a>
-          </p>
-        </div>
-      </aside>
-
-      <main className="flex-1 relative">
-        <TorontoMap onZoneHover={handleZoneHover} onZoneClick={handleZoneClick} activeZone={activeZone} />
-      </main>
+      {/* Centred Enter button — fades in after 2s */}
+      <div
+        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-3 transition-all duration-1000 ease-out ${
+          enterVisible ? 'opacity-100 translate-y-[-50%]' : 'opacity-0 translate-y-[-40%]'
+        }`}
+      >
+        <p className="text-white/40 text-xs tracking-[0.25em] uppercase">
+          Explore opportunities across the globe
+        </p>
+        <button
+          onClick={() => router.push('/tagline')}
+          className="text-white text-2xl tracking-[0.2em] uppercase font-extralight transition-all duration-700 hover:tracking-[0.35em] animate-pulse"
+        >
+          Enter
+        </button>
+      </div>
     </div>
-  );
+  )
 }
